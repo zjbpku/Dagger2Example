@@ -7,6 +7,10 @@ import android.util.Log;
 import com.fidroid.dagger2example.analytics.AnalyticsManager;
 import com.fidroid.dagger2example.base.MainActivityHelper;
 import com.fidroid.dagger2example.base.OSHelper;
+import com.fidroid.greendao.Test;
+import com.fidroid.greendao.TestDao;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -18,6 +22,9 @@ public class MainActivity extends AppCompatActivity {
     AnalyticsManager mAnalyticsManager;
     @Inject
     MainActivityHelper mainActivityHelper;
+
+    @Inject
+    TestDao mTestDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +39,17 @@ public class MainActivity extends AppCompatActivity {
 //        mAnalyticsManager = activityComponent.getOSHelper();
         mAnalyticsManager.send("MainActivity");
         mainActivityHelper.say();
-        Log.d(TAG, mOsHelper.getDeviceBrand());
+        Log.e(TAG, mOsHelper.getDeviceBrand());
+
+        long result = mTestDao.insert(new Test(null, "test", "dagger2demo"));
+        if (result > 0) {
+            Log.e(TAG, "insert data");
+        }
+
+        List<Test> list = mTestDao.queryBuilder().build().list();
+
+        if (list != null && list.size() > 0) {
+            Log.e(TAG, list.get(0).getName() + " " + list.get(0).getProject());
+        }
     }
 }

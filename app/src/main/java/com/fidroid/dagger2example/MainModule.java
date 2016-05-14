@@ -1,6 +1,8 @@
 package com.fidroid.dagger2example;
 
 import com.fidroid.dagger2example.base.MainActivityHelper;
+import com.fidroid.greendao.DaoSession;
+import com.fidroid.greendao.TestDao;
 
 import dagger.Module;
 import dagger.Provides;
@@ -15,5 +17,11 @@ public class MainModule {
     @DaggerScope(ActivityComponent.class)
     MainActivityHelper provideMainActivityHelper() {
         return new MainActivityHelper();
+    }
+
+    @Provides
+    @DaggerScope(ActivityComponent.class)
+    TestDao provideTestDao(DaoSession session) {
+        return session.getTestDao();
     }
 }

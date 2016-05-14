@@ -1,6 +1,7 @@
 package com.fidroid.dagger2example;
 
 import com.fidroid.dagger2example.analytics.DomainModule;
+import com.fidroid.dagger2example.dao.DBModule;
 
 import javax.inject.Singleton;
 
@@ -12,7 +13,8 @@ import dagger.Component;
 @Component(
         modules = {
                 AppModule.class,
-                DomainModule.class
+                DomainModule.class,
+                DBModule.class
         }
 )
 @Singleton
